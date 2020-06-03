@@ -14,4 +14,5 @@ fun Snackbar.config(context: Context) {
     this.view.layoutParams = params
     this.view.background = context.getDrawable(R.drawable.custom_snack_bar)
     ViewCompat.setElevation(this.view, 6f)
+    show()
 }

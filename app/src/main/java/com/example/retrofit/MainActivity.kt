@@ -2,11 +2,8 @@ package com.example.retrofit
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun observeViewModel() {
 
         with(viewModel) {
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             snackbar.observe(this@MainActivity, Observer {
-               Toast.makeText(this@MainActivity,it,LENGTH_LONG).show()
+                val s = Snackbar.make(parent, it, Snackbar.LENGTH_LONG).config(this@MainActivity)
 
             })
 
