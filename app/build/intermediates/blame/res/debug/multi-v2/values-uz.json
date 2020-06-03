@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/guhanmuthus/Desktop/android-architecture-components-master/RetroFit/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
+            "outputFile": "/Users/guhanmuthus/Desktop/News-Application/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "/Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/4aa802448159b92a8773923ea6842833/core-1.2.0/res/values-uz/values-uz.xml",

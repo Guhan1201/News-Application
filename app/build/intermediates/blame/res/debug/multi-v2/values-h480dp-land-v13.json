@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/guhanmuthus/Desktop/android-architecture-components-master/RetroFit/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+            "outputFile": "/Users/guhanmuthus/Desktop/News-Application/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
                     "source": "/Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/0e5df9933de71cbcbdf1cf7e43e2a64c/material-1.1.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
