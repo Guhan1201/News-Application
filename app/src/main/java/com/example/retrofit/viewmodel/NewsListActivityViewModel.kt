@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.retrofit.ResponseModel
+import com.example.retrofit.dataclass.ResponseModel
 import com.example.retrofit.utils.Utils
 import com.example.retrofit.apiLayer.APIInterface
 import com.example.retrofit.apiLayer.ApiClient

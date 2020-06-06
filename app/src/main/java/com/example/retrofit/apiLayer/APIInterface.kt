@@ -1,6 +1,6 @@
 package com.example.retrofit.apiLayer
 
-import com.example.retrofit.ResponseModel
+import com.example.retrofit.dataclass.ResponseModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

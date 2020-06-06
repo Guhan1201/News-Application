@@ -82,11 +82,6 @@ class MainArticleAdapter(private val context: Context) :
                 .into(holder.imageView)
         }
 
-
-
-
-
-
         holder.title.text = (model.title)
         holder.desc.text = model.description
         holder.source.text = model.source?.name
