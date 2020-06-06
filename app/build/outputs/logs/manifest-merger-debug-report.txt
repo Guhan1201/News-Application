@@ -102,10 +102,10 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/guha
 		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:8:9-35
 	android:theme
 		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:13:9-40
-activity#com.example.retrofit.NewsListActivity
+activity#com.example.retrofit.ui.NewsListActivity
 ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:9-20:20
 	android:name
-		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-51
+		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-54
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:15:13-19:29
 action#android.intent.action.MAIN
@@ -116,12 +116,12 @@ category#android.intent.category.LAUNCHER
 ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:18:17-77
 	android:name
 		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:18:27-74
-activity#com.example.retrofit.NewsDetailActivity
+activity#com.example.retrofit.ui.NewsDetailActivity
 ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:22:9-24:68
 	android:theme
 		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:24:13-56
 	android:name
-		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:23:13-47
+		ADDED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:23:13-50
 uses-sdk
 INJECTED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml

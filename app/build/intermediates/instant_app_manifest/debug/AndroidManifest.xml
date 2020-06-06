@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.retrofit.NewsListActivity" >
+        <activity android:name="com.example.retrofit.ui.NewsListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.retrofit.NewsDetailActivity"
+            android:name="com.example.retrofit.ui.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider

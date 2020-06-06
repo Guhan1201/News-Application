@@ -32,9 +32,9 @@
 21        android:testOnly="true"
 22        android:theme="@style/AppTheme" >
 22-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:13:9-40
-23        <activity android:name="com.example.retrofit.NewsListActivity" >
+23        <activity android:name="com.example.retrofit.ui.NewsListActivity" >
 23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:9-20:20
-23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-51
+23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-54
 24            <intent-filter>
 24-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:15:13-19:29
 25                <action android:name="android.intent.action.MAIN" />
@@ -48,8 +48,8 @@
 29        </activity>
 30        <activity
 30-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:22:9-24:68
-31            android:name="com.example.retrofit.NewsDetailActivity"
-31-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:23:13-47
+31            android:name="com.example.retrofit.ui.NewsDetailActivity"
+31-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:23:13-50
 32            android:theme="@style/AppTheme.NoActionBar" />
 32-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:24:13-56
 33
