@@ -26,7 +26,7 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
     }
 
 
-    private fun apiCall() {
+    fun apiCall() {
 
         _spinner.postValue(true)
         ApiClient.buildService(APIInterface::class.java)
@@ -54,7 +54,6 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
             })
 
     }
-
 
 
 }

@@ -1,34 +1,76 @@
 package com.example.retrofit
 
 import android.content.Context
-import android.text.TextUtils
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.retrofit.MainArticleAdapter.ViewHolder
 
-class MainArticleAdapter(private val articleArrayList: List<Article>) :
+class MainArticleAdapter(private val articleArrayList: List<Article>,private val context: Context) :
     RecyclerView.Adapter<ViewHolder>() {
-    private val context: Context? = null
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.row_main_article_adapter, viewGroup, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val articleModel = articleArrayList[position]
-        if (!TextUtils.isEmpty(articleModel.title)) {
-            viewHolder.titleText.text = articleModel.title
-        }
-        if (!TextUtils.isEmpty(articleModel.description)) {
-            viewHolder.descriptionText.text = articleModel.description
-        }
-        viewHolder.artilceAdapterParentLinear.tag = articleModel
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val model: Article = articleArrayList.get(position)
+
+        val requestOptions = RequestOptions()
+        requestOptions.placeholder(Utils.randomDrawbleColor)
+        requestOptions.error(Utils.randomDrawbleColor)
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+        requestOptions.centerCrop()
+
+        Glide.with(context)
+            .load(model.urlToImage)
+            .apply(requestOptions)
+            .listener(object : RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    @Nullable e: GlideException?, model: Any,
+                    target: Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    dataSource: com.bumptech.glide.load.DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.progressBar.visibility = View.GONE
+                    return false
+                }
+            })
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.imageView)
+
+
+
+        holder.title?.text = (model.title)
+        holder.desc?.text = model.description
+        holder.source?.text = model.source?.name
+        holder.time!!.text = " \u2022 " + Utils.DateToTimeFormat(model.publishedAt)
+        holder.published_ad?.setText(Utils.DateFormat(model.publishedAt))
+        holder.author?.text = model.author
     }
 
     override fun getItemCount(): Int {
@@ -36,11 +78,17 @@ class MainArticleAdapter(private val articleArrayList: List<Article>) :
     }
 
     class ViewHolder(view: View) :RecyclerView.ViewHolder(view) {
-        internal val titleText: TextView = view.findViewById(R.id.article_adapter_tv_title)
-        internal val descriptionText: TextView =
-            view.findViewById(R.id.article_adapter_tv_description)
-        internal val artilceAdapterParentLinear: LinearLayout =
-            view.findViewById(R.id.article_adapter_ll_parent)
+
+
+        internal val title = view.findViewById<TextView>(R.id.title)
+        internal val desc = view.findViewById<TextView>(R.id.desc)
+        internal val author = view.findViewById<TextView>(R.id.author)
+        internal val published_ad = view.findViewById<TextView>(R.id.publishedAt)
+        internal val source = view.findViewById<TextView>(R.id.source)
+        internal val time = view.findViewById<TextView>(R.id.time)
+        internal val imageView = view.findViewById<ImageView>(R.id.img)
+        internal val progressBar = view.findViewById<ProgressBar>(R.id.prograss_load_photo)
+
 
     }
 

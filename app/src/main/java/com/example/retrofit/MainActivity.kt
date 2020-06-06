@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NewsListActivityViewModel
     lateinit var progressBar: ProgressBar
     lateinit var parent : ConstraintLayout
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +29,17 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.activity_main_rv)
         progressBar = findViewById(R.id.progressBar)
         parent = findViewById(R.id.parent)
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
         viewModel = ViewModelProvider(this).get(NewsListActivityViewModel::class.java)
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
+
         observeViewModel()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.apiCall()
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -39,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         with(viewModel) {
             repos.observe(this@MainActivity, Observer {
                 it?.let {
-                    adapter = MainArticleAdapter(it)
+                    adapter = MainArticleAdapter(it,baseContext)
                     recyclerView.adapter = adapter
                 }
             })

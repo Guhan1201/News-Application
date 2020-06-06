@@ -197,6 +197,11 @@ attr chipStrokeColor
 attr chipStrokeWidth
 attr chipStyle
 attr chipSurfaceColor
+attr civ_border_color
+attr civ_border_overlay
+attr civ_border_width
+attr civ_circle_background_color
+attr civ_fill_color
 attr closeIcon
 attr closeIconEnabled
 attr closeIconEndPadding
@@ -771,8 +776,11 @@ color cardview_shadow_end_color
 color cardview_shadow_start_color
 color checkbox_themeable_attribute_color
 color colorAccent
+color colorBackground
 color colorPrimary
 color colorPrimaryDark
+color colorTextSubtitle
+color colorTextTitle
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background
@@ -1334,6 +1342,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
+drawable bottom_shadow
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1351,6 +1360,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_calendar_black_24dp
 drawable ic_clear_black_24dp
+drawable ic_date
 drawable ic_edit_black_24dp
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
@@ -1384,6 +1394,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable round_white
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1454,10 +1465,8 @@ id add
 id alertTitle
 id all
 id always
-id article_adapter_ll_parent
-id article_adapter_tv_description
-id article_adapter_tv_title
 id async
+id author
 id auto
 id barrier
 id beginning
@@ -1489,6 +1498,7 @@ id cut
 id date_picker_actions
 id decor_content_parent
 id default_activity_button
+id desc
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1518,6 +1528,7 @@ id forever
 id fragment_container_view_tag
 id ghost_view
 id ghost_view_holder
+id glide_custom_view_target_tag
 id gone
 id group_divider
 id groups
@@ -1528,12 +1539,14 @@ id icon
 id icon_group
 id ifRoom
 id image
+id img
 id info
 id invisible
 id italic
 id item_touch_helper_previous_elevation
 id labeled
 id largeLabel
+id layoutDate
 id left
 id line1
 id line3
@@ -1590,9 +1603,11 @@ id password_toggle
 id peekHeight
 id percent
 id pin
+id prograss_load_photo
 id progressBar
 id progress_circular
 id progress_horizontal
+id publishedAt
 id radio
 id right
 id right_icon
@@ -1619,6 +1634,7 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selected
+id shadow_bottom
 id shortcut
 id showCustom
 id showHome
@@ -1630,6 +1646,7 @@ id snackbar_action
 id snackbar_text
 id snap
 id snapMargins
+id source
 id spacer
 id split_action_bar
 id spread
@@ -1642,7 +1659,7 @@ id start
 id stretch
 id submenuarrow
 id submit_area
-id swipeRefreshLayout
+id swipe_refresh_layout
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -2598,6 +2615,7 @@ styleable ButtonBarLayout allowStacking
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Chip android_textAppearance android_textColor android_ellipsize android_maxWidth android_text android_checkable checkedIcon checkedIconEnabled checkedIconVisible chipBackgroundColor chipCornerRadius chipEndPadding chipIcon chipIconEnabled chipIconSize chipIconTint chipIconVisible chipMinHeight chipMinTouchTargetSize chipStartPadding chipStrokeColor chipStrokeWidth chipSurfaceColor closeIcon closeIconEnabled closeIconEndPadding closeIconSize closeIconStartPadding closeIconTint closeIconVisible ensureMinTouchTargetSize hideMotionSpec iconEndPadding iconStartPadding rippleColor shapeAppearance shapeAppearanceOverlay showMotionSpec textEndPadding textStartPadding
 styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVertical singleLine singleSelection
+styleable CircleImageView civ_border_color civ_border_overlay civ_border_width civ_circle_background_color civ_fill_color
 styleable CollapsingToolbarLayout collapsedTitleGravity collapsedTitleTextAppearance contentScrim expandedTitleGravity expandedTitleMargin expandedTitleMarginBottom expandedTitleMarginEnd expandedTitleMarginStart expandedTitleMarginTop expandedTitleTextAppearance scrimAnimationDuration scrimVisibleHeightTrigger statusBarScrim title titleEnabled toolbarId
 styleable CollapsingToolbarLayout_Layout layout_collapseMode layout_collapseParallaxMultiplier
 styleable ColorStateListItem android_color android_alpha alpha
