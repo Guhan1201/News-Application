@@ -15,7 +15,7 @@
 11-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:5:22-64
 12
 13    <application
-13-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:7:5-21:19
+13-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:7:5-26:19
 14        android:allowBackup="true"
 14-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:8:9-35
 15        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -32,9 +32,9 @@
 21        android:testOnly="true"
 22        android:theme="@style/AppTheme" >
 22-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:13:9-40
-23        <activity android:name="com.example.retrofit.MainActivity" >
+23        <activity android:name="com.example.retrofit.NewsListActivity" >
 23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:9-20:20
-23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-47
+23-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:14:19-51
 24            <intent-filter>
 24-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:15:13-19:29
 25                <action android:name="android.intent.action.MAIN" />
@@ -46,17 +46,23 @@
 27-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:18:27-74
 28            </intent-filter>
 29        </activity>
-30
-31        <provider
-31-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
-32            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-32-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
-33            android:authorities="com.example.retrofit.lifecycle-process"
-33-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
-34            android:exported="false"
-34-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
-35            android:multiprocess="true" />
-35-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
-36    </application>
-37
-38</manifest>
+30        <activity
+30-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:22:9-24:68
+31            android:name="com.example.retrofit.NewsDetailActivity"
+31-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:23:13-47
+32            android:theme="@style/AppTheme.NoActionBar" />
+32-->/Users/guhanmuthus/Desktop/News-Application/app/src/main/AndroidManifest.xml:24:13-56
+33
+34        <provider
+34-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
+35            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+35-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
+36            android:authorities="com.example.retrofit.lifecycle-process"
+36-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
+37            android:exported="false"
+37-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
+38            android:multiprocess="true" />
+38-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/guhanmuthus/.gradle/caches/transforms-2/files-2.1/7de29f29bcb43130f890ae34144fc5b8/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
+39    </application>
+40
+41</manifest>

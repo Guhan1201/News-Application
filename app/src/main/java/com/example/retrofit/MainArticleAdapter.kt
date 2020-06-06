@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -23,16 +25,23 @@ class MainArticleAdapter(private val context: Context) :
     RecyclerView.Adapter<ViewHolder>() {
 
     private lateinit var articleArrayList: List<Article>
+    private lateinit var onItemClickListener: OnItemClickListener
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.row_main_article_adapter, viewGroup, false)
-        return ViewHolder(view)
+        return ViewHolder(view, onItemClickListener)
     }
 
     fun setList(list: List<Article>) {
         articleArrayList = list
         notifyDataSetChanged()
     }
+
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model: Article = articleArrayList[position]
@@ -90,7 +99,9 @@ class MainArticleAdapter(private val context: Context) :
         return articleArrayList.size
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, onItemClickListener: OnItemClickListener) :
+        RecyclerView.ViewHolder(view),
+        View.OnClickListener {
 
 
         internal val title = view.findViewById<TextView>(R.id.title)
@@ -101,8 +112,20 @@ class MainArticleAdapter(private val context: Context) :
         internal val time = view.findViewById<TextView>(R.id.time)
         internal val imageView = view.findViewById<ImageView>(R.id.img)
         internal val progressBar = view.findViewById<ProgressBar>(R.id.prograss_load_photo)
+        private var onItemClickListener = onItemClickListener
 
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            onItemClickListener.onItemClick(view,adapterPosition)
+        }
 
     }
 
+}
+
+interface OnItemClickListener {
+    fun onItemClick(view: View?, position: Int)
 }
