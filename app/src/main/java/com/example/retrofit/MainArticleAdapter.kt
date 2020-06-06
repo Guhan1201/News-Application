@@ -19,16 +19,23 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.retrofit.MainArticleAdapter.ViewHolder
 
-class MainArticleAdapter(private val articleArrayList: List<Article>,private val context: Context) :
+class MainArticleAdapter(private val context: Context) :
     RecyclerView.Adapter<ViewHolder>() {
+
+    private lateinit var articleArrayList: List<Article>
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.row_main_article_adapter, viewGroup, false)
         return ViewHolder(view)
     }
 
+    fun setList(list: List<Article>) {
+        articleArrayList = list
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model: Article = articleArrayList.get(position)
+        val model: Article = articleArrayList[position]
 
         val requestOptions = RequestOptions()
         requestOptions.placeholder(Utils.randomDrawbleColor)
@@ -36,48 +43,54 @@ class MainArticleAdapter(private val articleArrayList: List<Article>,private val
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
         requestOptions.centerCrop()
 
-        Glide.with(context)
-            .load(model.urlToImage)
-            .apply(requestOptions)
-            .listener(object : RequestListener<Drawable?> {
-                override fun onLoadFailed(
-                    @Nullable e: GlideException?, model: Any,
-                    target: Target<Drawable?>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    holder.progressBar.visibility = View.GONE
-                    return false
-                }
+        if (model.urlToImage != null) {
+            Glide.with(context)
+                .load(model.urlToImage)
+                .apply(requestOptions)
+                .listener(object : RequestListener<Drawable?> {
+                    override fun onLoadFailed(
+                        @Nullable e: GlideException?, model: Any,
+                        target: Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        holder.progressBar.visibility = View.GONE
+                        return false
+                    }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any,
-                    target: Target<Drawable?>,
-                    dataSource: com.bumptech.glide.load.DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    holder.progressBar.visibility = View.GONE
-                    return false
-                }
-            })
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(holder.imageView)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any,
+                        target: Target<Drawable?>,
+                        dataSource: com.bumptech.glide.load.DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        holder.progressBar.visibility = View.GONE
+                        return false
+                    }
+                })
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.imageView)
+        }
 
 
 
-        holder.title?.text = (model.title)
-        holder.desc?.text = model.description
-        holder.source?.text = model.source?.name
-        holder.time!!.text = " \u2022 " + Utils.DateToTimeFormat(model.publishedAt)
-        holder.published_ad?.setText(Utils.DateFormat(model.publishedAt))
-        holder.author?.text = model.author
+
+
+
+        holder.title.text = (model.title)
+        holder.desc.text = model.description
+        holder.source.text = model.source?.name
+        holder.time.text = " \u2022 " + Utils.DateToTimeFormat(model.publishedAt)
+        holder.published_ad.setText(Utils.DateFormat(model.publishedAt))
+        holder.author.text = model.author
     }
+
 
     override fun getItemCount(): Int {
         return articleArrayList.size
     }
 
-    class ViewHolder(view: View) :RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
         internal val title = view.findViewById<TextView>(R.id.title)

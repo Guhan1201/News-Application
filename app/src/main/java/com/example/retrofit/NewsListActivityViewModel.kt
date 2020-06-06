@@ -22,15 +22,14 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
 
 
     init {
-        apiCall()
+        loadData()
     }
 
 
-    fun apiCall() {
-
+    fun loadData() {
         _spinner.postValue(true)
         ApiClient.buildService(APIInterface::class.java)
-            .getLatestNews("in", "6656eef2af3b40c490f3d6e3db2e049e")
+            .getLatestNews(Utils.country, "6656eef2af3b40c490f3d6e3db2e049e")
             .enqueue(object : Callback<ResponseModel> {
                 override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
                     _snackbar.postValue(t.message)
@@ -52,7 +51,31 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
                 }
 
             })
+    }
 
+    fun loadDataViasearch(query: String, language: String) {
+        _spinner.postValue(true)
+        ApiClient.buildService(APIInterface::class.java)
+            .getNewsSearch(query,language,"publishedAt","6656eef2af3b40c490f3d6e3db2e049e")
+            .enqueue(object : Callback<ResponseModel> {
+                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+                    _snackbar.postValue(t.message)
+                    _spinner.postValue(false)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseModel>,
+                    response: Response<ResponseModel>
+                ) {
+                    if (response.body()?.status.equals("ok")) {
+                        val articleList = response.body()?.articles
+                        _repos.postValue(articleList)
+                        Log.e("TEST", articleList.toString())
+                        _spinner.postValue(false)
+
+                    }
+                }
+            })
     }
 
 

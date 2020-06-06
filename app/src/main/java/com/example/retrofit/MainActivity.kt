@@ -1,11 +1,16 @@
 package com.example.retrofit
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,14 +38,43 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(NewsListActivityViewModel::class.java)
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
-
+        adapter = MainArticleAdapter(this@MainActivity)
         observeViewModel()
 
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.apiCall()
+            viewModel.loadData()
             swipeRefreshLayout.isRefreshing = false
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView: SearchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = "Search Latest News..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.length > 2) {
+                viewModel.loadDataViasearch(query,Utils.language)
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Type more than two letters!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+        return true
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun observeViewModel() {
@@ -48,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         with(viewModel) {
             repos.observe(this@MainActivity, Observer {
                 it?.let {
-                    adapter = MainArticleAdapter(it,baseContext)
+                    adapter.setList(it)
                     recyclerView.adapter = adapter
                 }
             })
