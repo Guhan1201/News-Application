@@ -19,8 +19,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 
 class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
     private lateinit var imageView: ImageView
-    private lateinit var appbar_title: TextView
-    private lateinit var appbar_subtitle: TextView
+    private lateinit var appbarTitle: TextView
+    private lateinit var appbarSubtitle: TextView
     private lateinit var date: TextView
     private lateinit var time: TextView
     private lateinit var title: TextView
@@ -46,22 +46,23 @@ class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedList
         val collapsingToolbarLayout: CollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar)
         collapsingToolbarLayout.title = ""
         appBarLayout = findViewById(R.id.appbar)
-        appBarLayout?.addOnOffsetChangedListener(this)
+        appBarLayout.addOnOffsetChangedListener(this)
         date_behavior = findViewById(R.id.date_behavior)
         titleAppbar = findViewById(R.id.title_appbar)
         imageView = findViewById(R.id.backdrop)
-        appbar_title = findViewById(R.id.title_on_appbar)
-        appbar_subtitle = findViewById(R.id.subtitle_on_appbar)
+        appbarTitle = findViewById(R.id.title_on_appbar)
+        appbarSubtitle = findViewById(R.id.subtitle_on_appbar)
         date = findViewById(R.id.date)
         time = findViewById(R.id.time)
         title = findViewById(R.id.title)
-        val intent: Intent = intent
-        mUrl = intent.getStringExtra("url")
-        mImg = intent.getStringExtra("img")
-        mTitle = intent.getStringExtra("title")
-        mDate = intent.getStringExtra("date")
-        mSource = intent.getStringExtra("source")
-        mAuthor = intent.getStringExtra("author")
+        val intent: Intent = (intent).also {
+            mUrl = it.getStringExtra("url")
+            mImg = it.getStringExtra("img")
+            mTitle = it.getStringExtra("title")
+            mDate = it.getStringExtra("date")
+            mSource = it.getStringExtra("source")
+            mAuthor = it.getStringExtra("author")
+        }
         val requestOptions = RequestOptions()
         requestOptions.error(Utils.randomDrawbleColor)
         Glide.with(this)
@@ -69,31 +70,29 @@ class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedList
             .apply(requestOptions)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView as ImageView)
-        appbar_title!!.text = mSource
-        appbar_subtitle!!.text = mUrl
-        date!!.text = Utils.DateFormat(mDate)
-        title!!.text = mTitle
-        val author: String
-        author = if (mAuthor != null) {
-            " \u2022 $mAuthor"
-        } else {
-            ""
-        }
-        time!!.text = mSource + author + " \u2022 " + Utils.DateToTimeFormat(mDate)
+        appbarTitle.text = mSource
+        appbarSubtitle.text = mUrl
+        date.text = Utils.DateFormat(mDate)
+        title.text = mTitle
+        val author: String = " \u2022 $mAuthor"
+        time.text = """$mSource$author • ${Utils.DateToTimeFormat(mDate)}"""
         initWebView(mUrl)
     }
 
     private fun initWebView(url: String?) {
         val webView: WebView = findViewById(R.id.webView)
-        webView.settings.loadsImagesAutomatically = true
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
-        webView.settings.setSupportZoom(true)
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
-        webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        webView.webViewClient = WebViewClient()
-        webView.loadUrl(url)
+        webView.apply {
+            settings.loadsImagesAutomatically = true
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.setSupportZoom(true)
+            settings.builtInZoomControls = true
+            settings.displayZoomControls = false
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            webViewClient = WebViewClient()
+            loadUrl(url)
+        }
+
     }
 
     override fun onBackPressed() {
@@ -110,12 +109,12 @@ class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedList
         val maxScroll: Int = appBarLayout.totalScrollRange
         val percentage = Math.abs(verticalOffset).toFloat() / maxScroll.toFloat()
         if (percentage == 1f && isHideToolbarView) {
-            date_behavior!!.visibility = View.GONE
-            titleAppbar!!.visibility = View.VISIBLE
+            date_behavior.visibility = View.GONE
+            titleAppbar.visibility = View.VISIBLE
             isHideToolbarView = !isHideToolbarView
         } else if (percentage < 1f && !isHideToolbarView) {
-            date_behavior!!.visibility = View.VISIBLE
-            titleAppbar!!.visibility = View.GONE
+            date_behavior.visibility = View.VISIBLE
+            titleAppbar.visibility = View.GONE
             isHideToolbarView = !isHideToolbarView
         }
     }
