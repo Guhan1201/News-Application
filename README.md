@@ -6,3 +6,4 @@ This Application entirely written in the kotlin followed the mvvm architecture ,
 Feature: 
  1. list the popular news based to our locale
  2. able to search the news using keywords
+ 3. able share the news with there friends
