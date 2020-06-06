@@ -20,6 +20,8 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
     private val _snackbar = MutableLiveData<String>()
     val snackbar: LiveData<String> = _snackbar
 
+    val apiInterface = ApiClient.buildService(APIInterface::class.java)
+
 
     init {
         loadData()
@@ -28,7 +30,7 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
 
     fun loadData() {
         _spinner.postValue(true)
-        ApiClient.buildService(APIInterface::class.java)
+        apiInterface
             .getLatestNews(Utils.country, "6656eef2af3b40c490f3d6e3db2e049e")
             .enqueue(object : Callback<ResponseModel> {
                 override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
@@ -55,8 +57,8 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
 
     fun loadDataViasearch(query: String, language: String) {
         _spinner.postValue(true)
-        ApiClient.buildService(APIInterface::class.java)
-            .getNewsSearch(query,language,"publishedAt","6656eef2af3b40c490f3d6e3db2e049e")
+        apiInterface
+            .getNewsSearch(query, language, "publishedAt", "6656eef2af3b40c490f3d6e3db2e049e")
             .enqueue(object : Callback<ResponseModel> {
                 override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
                     _snackbar.postValue(t.message)
@@ -78,13 +80,5 @@ class NewsListActivityViewModel(application: Application) : AndroidViewModel(app
             })
     }
 
-
-}
-
-sealed class Result<out T : Any?> {
-
-    class Success<out T : Any?>(val data: T) : Result<T>()
-
-    class Error(val exception: Throwable) : Result<Nothing>()
 
 }
