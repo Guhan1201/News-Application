@@ -1,5 +1,6 @@
 package com.example.retrofit.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.example.retrofit.utils.Utils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
     private lateinit var imageView: ImageView
     private lateinit var appbarTitle: TextView
@@ -38,6 +40,7 @@ class NewsDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedList
     private lateinit var mSource: String
     private lateinit var mAuthor: String
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_detail)
