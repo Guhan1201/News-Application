@@ -18,14 +18,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.retrofit.*
+import com.example.retrofit.R
+import com.example.retrofit.adapter.ArticleAdapter
 import com.example.retrofit.adapter.MainArticleAdapter
 import com.example.retrofit.adapter.OnItemClickListener
 import com.example.retrofit.dataclass.Article
-import com.example.retrofit.utils.Utils
+import com.example.retrofit.dataclass.State
 import com.example.retrofit.utils.config
 import com.example.retrofit.viewmodel.NewsListActivityViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 
 class NewsListActivity : AppCompatActivity(),
     OnItemClickListener {
@@ -37,6 +39,8 @@ class NewsListActivity : AppCompatActivity(),
     lateinit var parent: ConstraintLayout
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var articleList: List<Article>
+    private lateinit var newsListAdapter: ArticleAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,48 +54,38 @@ class NewsListActivity : AppCompatActivity(),
         recyclerView.layoutManager = linearLayoutManager
         adapter =
             MainArticleAdapter(this@NewsListActivity)
-        observeViewModel()
-        initClickListener()
-
+        initAdapter()
+        initState()
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.loadData()
+            viewModel.retry()
             swipeRefreshLayout.isRefreshing = false
         }
     }
+
+    private fun initAdapter() {
+        newsListAdapter = ArticleAdapter { viewModel.retry() }
+        recyclerView.adapter = newsListAdapter
+        viewModel.newsList.observe(this,
+            Observer {
+                newsListAdapter.submitList(it)
+            })
+    }
+
+    private fun initState() {
+        viewModel.getState().observe(this, Observer { state ->
+            progressBar.visibility = if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
+            if (!viewModel.listIsEmpty()) {
+                newsListAdapter.setState(state ?: State.DONE)
+            }
+        })
+    }
+
+
 
     private fun initClickListener() {
         adapter.setOnItemClickListener(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView: SearchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.queryHint = "Search Latest News..."
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                if (query.length > 2) {
-                    viewModel.loadDataViasearch(query,
-                        Utils.language
-                    )
-                } else {
-                    Toast.makeText(
-                        this@NewsListActivity,
-                        "Type more than two letters!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-        return true
-    }
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
