@@ -1,17 +1,10 @@
 package com.example.retrofit.ui
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,20 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.retrofit.R
 import com.example.retrofit.adapter.ArticleAdapter
-import com.example.retrofit.adapter.MainArticleAdapter
 import com.example.retrofit.adapter.OnItemClickListener
 import com.example.retrofit.dataclass.Article
 import com.example.retrofit.dataclass.State
-import com.example.retrofit.utils.config
 import com.example.retrofit.viewmodel.NewsListActivityViewModel
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class NewsListActivity : AppCompatActivity(),
     OnItemClickListener {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: MainArticleAdapter
     lateinit var viewModel: NewsListActivityViewModel
     lateinit var progressBar: ProgressBar
     lateinit var parent: ConstraintLayout
@@ -52,8 +40,7 @@ class NewsListActivity : AppCompatActivity(),
         viewModel = ViewModelProvider(this).get(NewsListActivityViewModel::class.java)
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
-        adapter =
-            MainArticleAdapter(this@NewsListActivity)
+
         initAdapter()
         initState()
         swipeRefreshLayout.setOnRefreshListener {
@@ -63,60 +50,25 @@ class NewsListActivity : AppCompatActivity(),
     }
 
     private fun initAdapter() {
-        newsListAdapter = ArticleAdapter { viewModel.retry() }
+        newsListAdapter = ArticleAdapter(this) { viewModel.retry() }
         recyclerView.adapter = newsListAdapter
         viewModel.newsList.observe(this,
             Observer {
                 newsListAdapter.submitList(it)
+                articleList = it
             })
     }
 
     private fun initState() {
         viewModel.getState().observe(this, Observer { state ->
-            progressBar.visibility = if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
+            progressBar.visibility =
+                if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
             if (!viewModel.listIsEmpty()) {
                 newsListAdapter.setState(state ?: State.DONE)
             }
         })
     }
 
-
-
-    private fun initClickListener() {
-        adapter.setOnItemClickListener(this)
-    }
-
-
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun observeViewModel() {
-
-        with(viewModel) {
-            repos.observe(this@NewsListActivity, Observer {
-                it?.let {
-                    articleList = it
-                    adapter.setList(it)
-                    recyclerView.adapter = adapter
-                }
-            })
-            spinner.observe(this@NewsListActivity, Observer {
-                if (it) {
-                    progressBar.visibility = View.VISIBLE
-                    recyclerView.visibility = View.INVISIBLE
-                } else {
-                    progressBar.visibility = View.INVISIBLE
-                    recyclerView.visibility = View.VISIBLE
-                }
-            })
-            snackbar.observe(this@NewsListActivity, Observer {
-                val s =
-                    Snackbar.make(parent, it, Snackbar.LENGTH_LONG).config(this@NewsListActivity)
-
-            })
-
-        }
-
-    }
 
     override fun onItemClick(view: View?, position: Int) {
 

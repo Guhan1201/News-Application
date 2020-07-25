@@ -1,5 +1,6 @@
 package com.example.retrofit.adapter
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +9,10 @@ import com.example.retrofit.dataclass.Article
 import com.example.retrofit.dataclass.State
 import com.example.retrofit.dataclass.State.*
 
-class ArticleAdapter(private val retry: () -> Unit) :
+class ArticleAdapter(
+    private val onItemClickListener: OnItemClickListener,
+    private val retry: () -> Unit
+) :
     PagedListAdapter<Article, RecyclerView.ViewHolder>(NewsDiffCallback) {
 
     private val DATA_VIEW_TYPE = 1
@@ -30,13 +34,17 @@ class ArticleAdapter(private val retry: () -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == DATA_VIEW_TYPE) NewsViewHolder.create(parent) else ListFooterViewHolder.create(retry, parent)
+        return if (viewType == DATA_VIEW_TYPE) NewsViewHolder.create(
+            parent,
+            onItemClickListener
+        ) else ListFooterViewHolder.create(retry, parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == DATA_VIEW_TYPE)
             getItem(position)?.let { (holder as NewsViewHolder).bind(it) }
-        else (holder as ListFooterViewHolder).bind(state)    }
+        else (holder as ListFooterViewHolder).bind(state)
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (position < super.getItemCount()) DATA_VIEW_TYPE else FOOTER_VIEW_TYPE
@@ -55,4 +63,8 @@ class ArticleAdapter(private val retry: () -> Unit) :
         notifyItemChanged(super.getItemCount())
     }
 
+}
+
+interface OnItemClickListener {
+    fun onItemClick(view: View?, position: Int)
 }

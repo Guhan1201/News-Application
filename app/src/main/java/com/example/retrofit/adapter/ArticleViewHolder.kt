@@ -18,7 +18,12 @@ import com.example.retrofit.dataclass.Article
 import com.example.retrofit.utils.Utils
 import kotlinx.android.synthetic.main.row_main_article_adapter.view.*
 
-class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class NewsViewHolder(private val view: View, private val onItemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+
+    override fun onClick(v: View?) {
+        onItemClickListener.onItemClick(view, adapterPosition)
+    }
 
     fun bind(model: Article) {
 
@@ -38,7 +43,7 @@ class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                         target: Target<Drawable?>,
                         isFirstResource: Boolean
                     ): Boolean {
-                       itemView.prograss_load_photo.visibility = View.GONE
+                        itemView.prograss_load_photo.visibility = View.GONE
                         return false
                     }
 
@@ -64,14 +69,21 @@ class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             model.publishedAt
         )
         itemView.publishedAt.setText(Utils.dateFormat(model.publishedAt))
-       itemView.author.text = model.author
+        itemView.author.text = model.author
     }
 
+    init {
+        view.setOnClickListener(this)
+    }
+
+
     companion object {
-        fun create(parent: ViewGroup): NewsViewHolder {
+        fun create(parent: ViewGroup, onItemClickListener: OnItemClickListener): NewsViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_main_article_adapter, parent, false)
-            return NewsViewHolder(view)
+            return NewsViewHolder(view, onItemClickListener)
         }
     }
+
+
 }
